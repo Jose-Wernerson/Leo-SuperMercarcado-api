@@ -8,7 +8,7 @@ dotenv.config();
 const PORT = process.env.PORT || 3001;
 
 // Inicializar banco de dados ao subir o servidor
-async function startServer() {
+async function initializeDatabase() {
 	try {
 		// Somente criar tabelas se MySQL estiver configurado
 		if (pool) {
@@ -17,16 +17,13 @@ async function startServer() {
 		} else {
 			console.log('ℹ️  Modo desenvolvimento: usando dados em memória');
 		}
-		
-		app.listen(PORT, () => {
-			console.log(`Servidor rodando na porta ${PORT}`);
-		});
 	} catch (error) {
 		console.error('⚠️  Erro ao conectar MySQL, usando modo desenvolvimento');
-		app.listen(PORT, () => {
-			console.log(`Servidor rodando na porta ${PORT} (modo desenvolvimento)`);
-		});
 	}
 }
 
-startServer();
+// Inicializar banco apenas uma vez
+initializeDatabase();
+
+// Para Vercel, exportar o app
+export default app;

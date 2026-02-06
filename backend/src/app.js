@@ -14,6 +14,11 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+// Rota raiz
+app.get('/', (req, res) => {
+    res.json({ message: 'API Leo Super Mercado rodando', version: '1.0.0' });
+});
+
 app.use('/produtos', produtosRoutes);
 app.use('/clientes', clientesRoutes);
 app.use('/rotas', rotasRoutes);
